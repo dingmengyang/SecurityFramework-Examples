@@ -7,12 +7,8 @@ import org.jason.datapermissioncheck.DataPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/customer")
@@ -21,11 +17,15 @@ public class CustomerController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @RequestMapping("/index")
+    public String index() {
+        return "index";
+    }
 
     @RequestMapping("/customerList")
     @ResponseBody
     public WebResult customerList(String token) {
-        Integer userId = (Integer) Application.map.get("hhhddddaaa123456").get("userId");
+        Integer userId = (Integer) Application.redisMap.get(token).get("userId");
         return WebResult.successWebResult(jdbcTemplate.queryForList("select * from t_customer where user_id=?", userId));
     }
 

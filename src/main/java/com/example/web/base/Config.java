@@ -47,9 +47,8 @@ public class Config extends WebMvcConfigurerAdapter implements ApplicationContex
                     return true;
                 }
                 String customerId=parameter.toString();
-//                String token=httpServletRequest.getAttribute("token").toString();
-                String token="hhhddddaaa123456";
-                Integer userId = (Integer) Application.map.get(token).get("userId");
+                String token=httpServletRequest.getParameter("token");
+                Integer userId = (Integer) Application.redisMap.get(token).get("userId");
                 int count = jdbcTemplate.queryForObject("select count(*) from t_customer where id=? and user_id=?", Integer.class, customerId, userId);
                 return count>0;
             }

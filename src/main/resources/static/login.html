@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/jdbc">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
 </head>
 <body>
-<form class="layui-form " action="http://localhost:8080/base/login" lay-filter="example" >
+<form class="layui-form "  id="loginForm" lay-filter="example" >
     <div class="layui-form-item">
         <label class="layui-form-label">用户名</label>
         <div class="layui-input-block">
@@ -21,9 +21,30 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">登录</button>
+            <button type="button" class="layui-btn" lay-submit="" lay-filter="demo1" onclick="login()">登录</button>
         </div>
     </div>
 </form>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="layui/layui.js" charset="utf-8"></script>
+<script src="common.js" charset="utf-8"></script>
+<script th:inline="none">
+    function login() {
+        senAjax({
+            url: 'http://localhost:8080/base/login',
+            data: $("#loginForm").serialize(),
+            dataType: "json",
+            success: function(resp){
+                if (resp.code == 0) {
+                    sessionStorage.setItem("token",resp.data);
+                    window.location.href="http://localhost:8080/customer/index";
+                }else {
+                    alert(resp.msg);
+                }
+            }
+        })
+    }
+</script>
 </body>
 </html>
