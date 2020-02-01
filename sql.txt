@@ -1,3 +1,14 @@
+CREATE TABLE `t_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `create_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+INSERT INTO `t_user` VALUES ('1', 'admin', '123', '2019-07-14 12:26:17'), ('2', 'jackchen', '456', '2019-05-26 11:30:55');
+
 CREATE TABLE `t_customer` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
